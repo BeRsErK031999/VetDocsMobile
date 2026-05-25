@@ -6,7 +6,7 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "build:search": "npm run build && pagefind --site build",
+    "build:search": "npm run build && pagefind --site build --glob \"docs/{reception,sterilization,anesthesia,emergency,medicines,templates}/**/*.html\"",
     "lint": "eslint .",
     "test": "node scripts/validate-docs.mjs",
     "swizzle": "docusaurus swizzle",
