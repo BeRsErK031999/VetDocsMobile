@@ -37,11 +37,11 @@ export default function PagefindSearch(): React.ReactNode {
 
   const statusText = useMemo(() => {
     if (status === 'loading') {
-      return 'Идет поиск...';
+      return 'Идет поиск по документам...';
     }
 
     if (status === 'empty') {
-      return 'Ничего не найдено. Попробуйте другой термин из документа: прием, анестезия, препарат, шок или эпикриз.';
+      return 'Ничего не найдено. Попробуйте рабочий термин из документов: прием, анестезия, препарат, шок, стерилизация или выписка.';
     }
 
     if (status === 'unavailable') {
@@ -98,13 +98,15 @@ export default function PagefindSearch(): React.ReactNode {
           className={styles.input}
           type="search"
           value={query}
-          placeholder="Анестезия, препарат, эпикриз..."
+          placeholder="Например: шок, анестезия, выписка"
+          enterKeyHint="search"
           onChange={(event) => void runSearch(event.target.value)}
         />
       </div>
       {status === 'idle' && results.length === 0 && (
         <p className={styles.hint}>
-          Введите минимум два символа. Можно искать по разделам, тегам и словам внутри документов.
+          Введите минимум два символа. Можно искать по названию раздела, словам внутри регламентов,
+          препаратам, процедурам и документам для владельца.
         </p>
       )}
       {statusText && <p className={styles.status}>{statusText}</p>}

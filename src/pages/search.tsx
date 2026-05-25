@@ -8,9 +8,11 @@ export default function SearchPage(): React.ReactNode {
     <Layout title="Поиск" description="Офлайн-поиск по документации VetDocs Mobile">
       <main className="search-page container">
         <div className="search-page__header">
-          <Heading as="h1">Поиск</Heading>
+          <p className="search-page__eyebrow">Офлайн-поиск по базе VetDocs</p>
+          <Heading as="h1">Найти документ</Heading>
           <p>
-            Ищите по названиям, тегам и тексту документов: анестезия, шок, препараты, эпикриз.
+            Ищите по названиям, словам внутри документов и рабочим ситуациям: прием, анестезия,
+            шок, стерилизация, препарат или выписка.
           </p>
         </div>
         <PagefindSearch />

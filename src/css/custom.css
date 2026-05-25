@@ -30,14 +30,27 @@
 html,
 body {
   overflow-x: hidden;
+  text-size-adjust: 100%;
 }
 
 main {
   overflow-wrap: break-word;
 }
 
+img,
+table,
+pre,
+code {
+  max-width: 100%;
+}
+
+.theme-doc-markdown table {
+  display: block;
+  overflow-x: auto;
+}
+
 .home-hero {
-  padding: 3.5rem 0 3rem;
+  padding: 3rem 0 2.5rem;
   background: var(--ifm-background-surface-color);
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
 }
@@ -55,7 +68,7 @@ main {
 }
 
 .home-hero__subtitle {
-  max-width: 740px;
+  max-width: 760px;
   margin: 0 0 1.5rem;
   color: var(--ifm-color-emphasis-800);
   font-size: 1.18rem;
@@ -70,15 +83,16 @@ main {
 
 .home-action {
   display: inline-flex;
-  min-height: 50px;
+  min-height: 54px;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.1rem;
   color: var(--ifm-font-color-base);
   font-weight: 700;
   text-decoration: none;
+  touch-action: manipulation;
 }
 
 .home-action:hover {
@@ -95,6 +109,25 @@ main {
 
 .home-action--primary:hover {
   color: #fff;
+}
+
+.home-quick-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  max-width: 760px;
+  margin-top: 1.25rem;
+}
+
+.home-quick-panel span {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  background: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-800);
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
 }
 
 .home-sections {
@@ -120,20 +153,21 @@ main {
 
 .section-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 1rem;
 }
 
 .section-card {
   display: grid;
-  min-height: 190px;
+  min-height: 220px;
   align-content: start;
   border: 1px solid var(--vetdocs-card-border);
   border-radius: 8px;
-  padding: 1.1rem;
+  padding: 1.25rem;
   color: var(--ifm-font-color-base);
   text-decoration: none;
   background: var(--ifm-background-surface-color);
+  touch-action: manipulation;
 }
 
 .section-card:hover {
@@ -155,7 +189,7 @@ main {
 
 .section-card h3 {
   margin-bottom: 0.5rem;
-  font-size: 1.28rem;
+  font-size: 1.34rem;
   line-height: 1.25;
 }
 
@@ -184,6 +218,14 @@ main {
 
 .search-page__header h1 {
   margin-bottom: 0.5rem;
+  line-height: 1.15;
+}
+
+.search-page__eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--vetdocs-card-accent);
+  font-weight: 800;
+  font-size: 0.95rem;
 }
 
 .search-page__header p {
@@ -193,21 +235,28 @@ main {
 }
 
 .markdown {
-  font-size: 1.02rem;
+  font-size: 1.04rem;
   line-height: 1.72;
 }
 
 .markdown h1 {
+  margin-bottom: 1rem;
   line-height: 1.15;
 }
 
 .markdown h2,
 .markdown h3 {
+  scroll-margin-top: 5rem;
   line-height: 1.25;
 }
 
 .theme-doc-markdown {
   max-width: 100%;
+}
+
+.theme-doc-markdown p,
+.theme-doc-markdown li {
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 576px) {
@@ -217,15 +266,16 @@ main {
   }
 
   .home-hero {
-    padding: 2rem 0 1.75rem;
+    padding: 1.65rem 0 1.5rem;
   }
 
   .home-hero__title {
-    font-size: 2.25rem;
+    font-size: 2.1rem;
   }
 
   .home-hero__subtitle {
-    font-size: 1rem;
+    font-size: 1.04rem;
+    line-height: 1.55;
   }
 
   .home-actions {
@@ -234,31 +284,49 @@ main {
 
   .home-action {
     width: 100%;
+    min-height: 56px;
   }
 
   .section-grid {
     grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
 
   .section-card {
     min-height: 0;
-    padding: 1rem;
+    padding: 1.05rem;
   }
 
   .home-section-heading h2 {
     font-size: 1.45rem;
   }
 
+  .search-page {
+    padding-top: 1.5rem;
+  }
+
+  .search-page__header h1 {
+    font-size: 2rem;
+  }
+
   .markdown {
-    font-size: 1rem;
-    line-height: 1.68;
+    font-size: 1.06rem;
+    line-height: 1.7;
   }
 
   .markdown h1:first-child {
-    font-size: 1.9rem;
+    font-size: 1.85rem;
   }
 
   .markdown h2 {
-    font-size: 1.45rem;
+    font-size: 1.42rem;
+  }
+
+  .markdown h3 {
+    font-size: 1.2rem;
+  }
+
+  .theme-doc-markdown {
+    padding-bottom: 1.5rem;
   }
 }
