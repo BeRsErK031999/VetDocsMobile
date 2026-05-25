@@ -8,6 +8,7 @@ export default tseslint.config(
       'build/**',
       '.docusaurus/**',
       'node_modules/**',
+      'android/**/build/**',
       'android/app/src/main/assets/public/**',
     ],
   },
