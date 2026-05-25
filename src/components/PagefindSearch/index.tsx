@@ -41,7 +41,7 @@ export default function PagefindSearch(): React.ReactNode {
     }
 
     if (status === 'empty') {
-      return 'Ничего не найдено.';
+      return 'Ничего не найдено. Попробуйте другой термин из документа: прием, анестезия, препарат, шок или эпикриз.';
     }
 
     if (status === 'unavailable') {
@@ -89,17 +89,24 @@ export default function PagefindSearch(): React.ReactNode {
 
   return (
     <section className={styles.search} aria-label="Поиск по документации">
-      <label className={styles.label} htmlFor="pagefind-search">
-        Поиск по документации
-      </label>
-      <input
-        id="pagefind-search"
-        className={styles.input}
-        type="search"
-        value={query}
-        placeholder="Например: анестезия, препарат, эпикриз"
-        onChange={(event) => void runSearch(event.target.value)}
-      />
+      <div className={styles.field}>
+        <label className={styles.label} htmlFor="pagefind-search">
+          Поиск по документам
+        </label>
+        <input
+          id="pagefind-search"
+          className={styles.input}
+          type="search"
+          value={query}
+          placeholder="Анестезия, препарат, эпикриз..."
+          onChange={(event) => void runSearch(event.target.value)}
+        />
+      </div>
+      {status === 'idle' && results.length === 0 && (
+        <p className={styles.hint}>
+          Введите минимум два символа. Можно искать по разделам, тегам и словам внутри документов.
+        </p>
+      )}
       {statusText && <p className={styles.status}>{statusText}</p>}
       {results.length > 0 && (
         <ul className={styles.results}>
