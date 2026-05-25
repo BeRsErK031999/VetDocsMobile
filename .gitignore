@@ -29,7 +29,6 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Capacitor
-/android
 /ios
 /capacitor-cordova-android-plugins
 /capacitor-cordova-ios-plugins

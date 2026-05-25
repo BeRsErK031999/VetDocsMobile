@@ -10,6 +10,7 @@ npm run start
 npm run build
 npm run build:search
 npm run serve
+npm run mobile:build
 ```
 
 `npm run build:search` собирает production-версию сайта и создает локальный индекс Pagefind в `build/pagefind`.
@@ -21,6 +22,27 @@ npm run serve
 ## Офлайн-режим
 
 VetDocs Mobile собирается как статический справочник без внешних ссылок, CDN, аналитики и удаленного поискового сервиса. Поиск работает через локальные файлы Pagefind из `build/pagefind`, поэтому финальный артефакт для упаковки должен быть получен командой `npm run build:search`.
+
+## Android-сборка
+
+Android-оболочка подключена через Capacitor и использует локальную папку `build` как web-артефакт. Сервер для запуска приложения не нужен.
+
+Для подготовки Android-проекта выполните:
+
+```bash
+npm run mobile:build
+```
+
+Команда выполнит `npm run build:search`, создаст Docusaurus production build с локальным индексом Pagefind и синхронизирует результат в Android-проект через `npx cap sync android`.
+
+Полезные команды:
+
+```bash
+npm run mobile:sync
+npm run mobile:open
+```
+
+`npm run mobile:sync` повторно синхронизирует уже собранный `build` в Android-проект. `npm run mobile:open` открывает Android-проект в Android Studio.
 
 ## Проверки
 
