@@ -57,11 +57,6 @@ const config: Config = {
           label: 'Документы',
         },
         {to: '/search', label: 'Поиск', position: 'left'},
-        {
-          href: 'https://github.com/BeRsErK031999/VetDocsMobile',
-          label: 'GitHub',
-          position: 'right',
-        },
       ],
     },
     footer: {
@@ -77,10 +72,6 @@ const config: Config = {
             {
               label: 'Поиск',
               to: '/search',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/BeRsErK031999/VetDocsMobile',
             },
           ],
         },
