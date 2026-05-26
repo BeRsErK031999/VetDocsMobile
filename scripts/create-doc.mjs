@@ -13,6 +13,7 @@ const allowedSections = {
 const requiredArgs = ['section', 'slug', 'title', 'description', 'tags'];
 const rootDir = process.cwd();
 const docsDir = path.join(rootDir, 'docs');
+const sidebarPath = path.join(rootDir, 'sidebars.ts');
 
 function printUsage() {
   console.error(`
@@ -146,16 +147,76 @@ lastUpdated: ${today}
 `;
 }
 
+function registerDocumentInSidebar(sidebarContent, section, documentId) {
+  if (sidebarContent.includes(`'${documentId}'`) || sidebarContent.includes(`"${documentId}"`)) {
+    return {content: sidebarContent, changed: false};
+  }
+
+  const lines = sidebarContent.split(/\r?\n/);
+  const lineEnding = sidebarContent.includes('\r\n') ? '\r\n' : '\n';
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const inlineItems = line.match(/^(\s*items:\s*)\[(.*)](,?\s*)$/);
+
+    if (inlineItems && inlineItems[2].includes(`'${section}/`)) {
+      lines[index] = `${inlineItems[1]}[${inlineItems[2]}, '${documentId}']${inlineItems[3]}`;
+      return {content: lines.join(lineEnding), changed: true};
+    }
+
+    if (!line.match(/^\s*items:\s*\[\s*$/)) {
+      continue;
+    }
+
+    const startIndex = index;
+    let endIndex = -1;
+    let hasSectionItem = false;
+
+    for (let itemIndex = startIndex + 1; itemIndex < lines.length; itemIndex += 1) {
+      if (lines[itemIndex].includes(`'${section}/`)) {
+        hasSectionItem = true;
+      }
+
+      if (lines[itemIndex].match(/^\s*](,?\s*)$/)) {
+        endIndex = itemIndex;
+        break;
+      }
+    }
+
+    if (hasSectionItem && endIndex > startIndex) {
+      const itemIndent = lines[startIndex + 1]?.match(/^(\s*)/)?.[1] ?? `${line.match(/^(\s*)/)?.[1] ?? ''}  `;
+      lines.splice(endIndex, 0, `${itemIndent}'${documentId}',`);
+      return {content: lines.join(lineEnding), changed: true};
+    }
+  }
+
+  fail(
+    `Could not find sidebar items array for section "${section}". Add "${documentId}" to sidebars.ts manually.`,
+  );
+}
+
 const args = parseArgs(process.argv.slice(2));
 const tags = validateArgs(args);
 const sectionDir = path.join(docsDir, args.section);
 const outputPath = path.join(sectionDir, `${args.slug}.md`);
+const documentId = `${args.section}/${args.slug}`;
 
 if (fs.existsSync(outputPath)) {
   fail(`File already exists: ${path.relative(rootDir, outputPath)}. Choose another --slug or edit the existing document.`);
 }
 
+const sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
+const sidebarUpdate = registerDocumentInSidebar(sidebarContent, args.section, documentId);
+
 fs.mkdirSync(sectionDir, {recursive: true});
 fs.writeFileSync(outputPath, buildDocument(args, tags), 'utf8');
+if (sidebarUpdate.changed) {
+  fs.writeFileSync(sidebarPath, sidebarUpdate.content, 'utf8');
+}
 
 console.log(`Created document: ${path.relative(rootDir, outputPath)}`);
+console.log(
+  sidebarUpdate.changed
+    ? `Updated sidebar: added ${documentId}`
+    : `Sidebar already contains ${documentId}`,
+);
