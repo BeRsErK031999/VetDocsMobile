@@ -2,6 +2,8 @@
 
 Мобильная база ветеринарных регламентов, чек-листов и шаблонов документов на Docusaurus 3, TypeScript и React.
 
+Developer handoff: `docs-for-dev/PROJECT_STATUS.md`.
+
 ## Команды
 
 ```bash
